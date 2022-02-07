@@ -7,17 +7,31 @@ public class SparkWebApp {
     public static void main(String[] args) {
         port(getPort());
         staticFiles.location("/public");
-        get("/Convertidor/:tipo/:numero", (req, res) -> parseCelsius(req.params(":tipo"),req.params(":numero")));
+        get("/Convertidor/:tipo/:numero", (req, res) -> convertidor(req.params(":tipo"),req.params(":numero")));
     }
 
-    public static JSONObject parseCelsius(String tipo, String numero){
-        Convertidor convertidor = new Convertidor(tipo, Float.parseFloat(numero));
-        convertidor.parse();
+    public static JSONObject convertidor(String tipo, String numero){
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("tipo",convertidor.getTipo());
-        jsonObject.put("numero",convertidor.getNumero());
-        jsonObject.put("respuesta", convertidor.getRespuesta());
+        float temperatura = Float.parseFloat(numero);
+        jsonObject.put("tipo", tipo);
+        jsonObject.put("numero", numero);
+        if(tipo.equals("Celsius")){
+            jsonObject.put("respuesta", parseFahrenheit(temperatura));
+        }else if (tipo.equals("Fahrenheit")){
+            jsonObject.put("respuesta", parseCelsius(temperatura));
+        }else {
+            jsonObject.put("respuesta", "Tipo de conversion no sortado");
+        }
         return jsonObject;
+    }
+
+    private static float parseFahrenheit(float numero) {
+        System.out.println(numero);
+        return  (numero * (float) 9/5) + 32;
+    }
+
+    private static float parseCelsius(float numero){
+        return  (numero - 32) * (float) 5/9 ;
     }
 
     static int getPort() {
