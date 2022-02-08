@@ -10,14 +10,23 @@ import junit.framework.TestSuite;
 public class AppTest 
     extends TestCase
 {
+
+
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
-    {
-        super( testName );
+    public AppTest( String testName )  {
+        for(int i = 0; i <= 10; i++) {
+            new Thread(new Connection()).start();
+        }
+        try {
+            Thread.sleep(3000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
