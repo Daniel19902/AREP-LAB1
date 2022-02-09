@@ -11,7 +11,7 @@ public class Convertidor implements ServiciosConvertidor{
     public Convertidor(String tipo, float temperatura) {
         this.tipo = tipo;
         this.temperatura = temperatura;
-        System.out.println("peticion");
+
         if(Objects.equals(tipo, "Celsius")){
             conversion = convertirToFahrenheit();
         }else {
